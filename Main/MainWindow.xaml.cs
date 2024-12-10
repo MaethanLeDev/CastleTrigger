@@ -22,14 +22,14 @@ namespace Main
         // ----------- Déclarations des variables ----------------
         private DispatcherTimer TimerJeu = new DispatcherTimer(); // C'est le chrono
         private bool Commande_Haut=false, Commande_Bas=false, Commande_Gauche = false, Commande_Droit=false;
-
+        public double Constante_Deplacement = 6;
        
 
        
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W)
+            if (e.Key == Key.Z)
             {
                 Commande_Haut = true;
             }
@@ -49,7 +49,7 @@ namespace Main
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W)
+            if (e.Key == Key.Z)
             {
                 Commande_Haut = false;
             }
@@ -90,13 +90,24 @@ namespace Main
         public void Deplacement()
         {
             double POS_TOP_JOUEUR=Canvas.GetTop(JOUEUR);
+            double POS_GAUCHE_JOUEUR = Canvas.GetLeft(JOUEUR);
             if (Commande_Bas==true)
             {
-                Canvas.SetTop(JOUEUR, POS_TOP_JOUEUR+20);
+                Canvas.SetTop(JOUEUR, POS_TOP_JOUEUR+Constante_Deplacement);
             }
-            
-       
-        
+            if (Commande_Haut == true)
+            {
+                Canvas.SetTop(JOUEUR, POS_TOP_JOUEUR-Constante_Deplacement);
+            }
+            if (Commande_Gauche == true)
+            {
+                Canvas.SetLeft(JOUEUR, POS_GAUCHE_JOUEUR-Constante_Deplacement);
+            }
+            if (Commande_Droit == true)
+            {
+                Canvas.SetLeft(JOUEUR, POS_GAUCHE_JOUEUR+Constante_Deplacement);
+            }
+
         }
 
     }
