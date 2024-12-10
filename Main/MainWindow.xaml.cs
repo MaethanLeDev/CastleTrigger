@@ -13,10 +13,9 @@ namespace Main
     public partial class MainWindow : Window
     {
         // ----------- CONSTANTES --------------------------------
-        private readonly string imagePath = "P:\\Sàé1.01\\CastleTrigger\\Assets\\Map_V1.png"; 
+        private readonly string imagePath = "pack://application:,,,/Assets/MAP_V1.png";
         private Image fondMap;
         public static readonly int CASE = 48;
-
 
 
         // ----------- Déclarations des variables ----------------
@@ -27,10 +26,13 @@ namespace Main
         Canvas FenetreJeu = new Canvas();
         Rectangle JOUEUR = new Rectangle
         {
-            Width = 48,
-            Height = 48,
+            Width = CASE,
+            Height = CASE,
             Fill = Brushes.Red
         };
+
+        double joueurX = CASE;
+        double joueurY = CASE;
 
         public MainWindow()
         {
@@ -44,7 +46,7 @@ namespace Main
 
 
             fondMap = new Image();
-            fondMap.Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+            fondMap.Source = new BitmapImage((new Uri("pack://application:,,,/img/MAP_V1.png")));
             FenetreJeu.Children.Add(fondMap); // Fond
             Canvas.SetTop(fondMap, 0);
             Canvas.SetLeft(fondMap, 0);

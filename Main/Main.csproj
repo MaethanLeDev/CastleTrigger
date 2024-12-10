@@ -8,4 +8,19 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Assets\**" />
+    <EmbeddedResource Remove="Assets\**" />
+    <None Remove="Assets\**" />
+    <Page Remove="Assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="img\MAP_V1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="img\MAP_V1.png" />
+  </ItemGroup>
+
 </Project>
