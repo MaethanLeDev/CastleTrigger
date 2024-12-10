@@ -13,15 +13,41 @@ using System.Windows.Threading;
 using System.Security.AccessControl;
 
 
+
 namespace Main
 {
     
     public partial class MainWindow : Window
     {
 
+
+
+        // ----------- CONSTANTES --------------------------------
+
+        // ---- CHEMINS
+        private readonly string imagePath = "P:\\Sàé1.01\\CastleTrigger\\Assets\\Map_V1.png"; 
+
+
         // ----------- Déclarations des variables ----------------
         private DispatcherTimer TimerJeu = new DispatcherTimer(); // C'est le chrono
         private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private void KeyBoardUp(object sender, KeyEventArgs e)
         {
@@ -71,6 +97,17 @@ namespace Main
             TimerJeu.Interval = TimeSpan.FromMilliseconds(16); // 60fps
             TimerJeu.Tick += JeuTic;
             TimerJeu.Start();
+
+            
+
+            // Création du fond d'écran
+            ImageBrush backgroundBrush = new ImageBrush();
+            backgroundBrush.ImageSource = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute));
+            
+
+            // Assigner l'ImageBrush comme fond du Grid
+            FenetreJeu.Background = backgroundBrush;
+
 
         }
 

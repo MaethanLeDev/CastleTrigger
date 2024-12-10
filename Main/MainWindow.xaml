@@ -14,13 +14,13 @@
             x:Name="FenetreJeu"
             KeyDown="KeyBoardDown"
             KeyUp="KeyBoardUp">
-            <Rectangle
+            <Rectangle x:Name="Joueur"
                 Canvas.Left="50"
                 Canvas.Top="50"
                 Width="48"
                 Height="48"
                 Fill="red"
-                x: Name="Joueur"/>
+                />
         </Canvas>
     </Grid>
 </Window>
