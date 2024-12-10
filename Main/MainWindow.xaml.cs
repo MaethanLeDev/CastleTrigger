@@ -27,10 +27,13 @@ namespace Main
         Canvas FenetreJeu = new Canvas();
         Rectangle JOUEUR = new Rectangle
         {
-            Width = 48,
-            Height = 48,
+            Width = CASE,
+            Height = CASE,
             Fill = Brushes.Red
         };
+
+        double joueurX = CASE;
+        double joueurY = CASE;
 
         public MainWindow()
         {
