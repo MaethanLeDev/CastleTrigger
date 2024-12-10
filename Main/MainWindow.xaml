@@ -8,19 +8,7 @@
     Title="MainWindow"
     Width="720"
     Height="420"
-    mc:Ignorable="d" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
-    <Grid>
-        <Canvas
-            x:Name="FenetreJeu"
-            KeyDown="KeyBoardDown"
-            KeyUp="KeyBoardUp">
-            <Rectangle x:Name="Joueur"
-                Canvas.Left="50"
-                Canvas.Top="50"
-                Width="48"
-                Height="48"
-                Fill="red"
-                />
-        </Canvas>
-    </Grid>
-</Window>
+    Background="Black"
+    KeyDown="Window_KeyDown"
+    KeyUp="Window_KeyUp"
+    mc:Ignorable="d" />
