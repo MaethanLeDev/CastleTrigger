@@ -21,45 +21,49 @@ namespace Main
 
         // ----------- Déclarations des variables ----------------
         private DispatcherTimer TimerJeu = new DispatcherTimer(); // C'est le chrono
-        private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed;
+        private bool Commande_Haut=false, Commande_Bas=false, Commande_Gauche = false, Commande_Droit=false;
 
-        private void KeyBoardUp(object sender, KeyEventArgs e)
+       
+
+       
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W)
             {
-                UpKeyPressed = false;
+                Commande_Haut = true;
             }
             if (e.Key == Key.S)
             {
-                DownKeyPressed = false;
+                Commande_Bas = true;
             }
             if (e.Key == Key.Q)
             {
-                LeftKeyPressed = false;
+                Commande_Gauche = true;
             }
             if (e.Key == Key.D)
             {
-                RightKeyPressed = false;
+                Commande_Droit = true;
             }
         }
 
-        private void KeyBoardDown(object sender, KeyEventArgs e)
+        private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W)
             {
-                UpKeyPressed = true;
+                Commande_Haut = false;
             }
             if (e.Key == Key.S)
             {
-                DownKeyPressed = true;
+                Commande_Bas = false;
             }
             if (e.Key == Key.Q)
             {
-                LeftKeyPressed = true;
+                Commande_Gauche = false;
             }
             if (e.Key == Key.D)
             {
-                RightKeyPressed = true;
+                Commande_Droit = false;
             }
         }
 
@@ -79,7 +83,20 @@ namespace Main
              * La Méthode s'exécute 60x / secondes
              */
         {
+            Console.WriteLine(Commande_Bas);
+            Deplacement();
 
+        }
+        public void Deplacement()
+        {
+            double POS_TOP_JOUEUR=Canvas.GetTop(JOUEUR);
+            if (Commande_Bas==true)
+            {
+                Canvas.SetTop(JOUEUR, POS_TOP_JOUEUR+20);
+            }
+            
+       
+        
         }
 
     }
