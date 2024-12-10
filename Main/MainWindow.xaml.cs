@@ -51,41 +51,41 @@ namespace Main
 
         private void KeyBoardUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W)
+            if (e.Key == Key.Z)
             {
-                UpKeyPressed = false;
+                Commande_Haut = true;
             }
             if (e.Key == Key.S)
             {
-                DownKeyPressed = false;
+                Commande_Bas = true;
             }
             if (e.Key == Key.Q)
             {
-                LeftKeyPressed = false;
+                Commande_Gauche = true;
             }
             if (e.Key == Key.D)
             {
-                RightKeyPressed = false;
+                Commande_Droit = true;
             }
         }
 
-        private void KeyBoardDown(object sender, KeyEventArgs e)
+        private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.W)
+            if (e.Key == Key.Z)
             {
-                UpKeyPressed = true;
+                Commande_Haut = false;
             }
             if (e.Key == Key.S)
             {
-                DownKeyPressed = true;
+                Commande_Bas = false;
             }
             if (e.Key == Key.Q)
             {
-                LeftKeyPressed = true;
+                Commande_Gauche = false;
             }
             if (e.Key == Key.D)
             {
-                RightKeyPressed = true;
+                Commande_Droit = false;
             }
         }
 
@@ -116,6 +116,30 @@ namespace Main
              * La Méthode s'exécute 60x / secondes
              */
         {
+            Console.WriteLine(Commande_Bas);
+            Deplacement();
+
+        }
+        public void Deplacement()
+        {
+            double POS_TOP_JOUEUR=Canvas.GetTop(JOUEUR);
+            double POS_GAUCHE_JOUEUR = Canvas.GetLeft(JOUEUR);
+            if (Commande_Bas==true)
+            {
+                Canvas.SetTop(JOUEUR, POS_TOP_JOUEUR+Constante_Deplacement);
+            }
+            if (Commande_Haut == true)
+            {
+                Canvas.SetTop(JOUEUR, POS_TOP_JOUEUR-Constante_Deplacement);
+            }
+            if (Commande_Gauche == true)
+            {
+                Canvas.SetLeft(JOUEUR, POS_GAUCHE_JOUEUR-Constante_Deplacement);
+            }
+            if (Commande_Droit == true)
+            {
+                Canvas.SetLeft(JOUEUR, POS_GAUCHE_JOUEUR+Constante_Deplacement);
+            }
 
         }
 
