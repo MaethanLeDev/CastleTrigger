@@ -1,6 +1,7 @@
 ﻿using Map;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -125,17 +126,11 @@ namespace Main
         {
             // Mise à jour des coordonnées du joueur
             Joueur.MettreAJourPosition();
-            foreach(double coord in Joueur.coords)
-            {
-                Console.Write(coord.ToString() + ", ");
-            }
-            Console.Write(" / " + Canvas.GetLeft(fondMap) + ",  " + Canvas.GetTop(fondMap)); 
-            Console.WriteLine();
+            
 
             // Mise à jour de la position graphique du joueur
             Canvas.SetTop(Joueur.image, Joueur.coords[1]);
             Canvas.SetLeft(Joueur.image, Joueur.coords[0]);
-            
             MoveCamera();
         }
 
@@ -150,7 +145,7 @@ namespace Main
         }
     }
 
-    public class Entite
+    public class Personnage
     {
         public double[] coords { get; private set; } // Coordonnées du joueur (x, y)
         public double speed { get; private set; }   // Vitesse du joueur
@@ -158,9 +153,9 @@ namespace Main
         public Rectangle image;
 
 
-        public Entite(double vitesseInitiale)
+        public Personnage(double vitesseInitiale)
         {
-            coords = new double[2] { 50, 50 }; 
+            coords = new double[2] { 50, 50 }; // Position de départ
             speed = vitesseInitiale;
             direction = new Vector2(0, 0);    // Pas de mouvement initial
             this.image = new Rectangle
@@ -181,25 +176,73 @@ namespace Main
 
         public void MettreAJourDirection()
         {
+            int[] tabCollision = MethodeCollision(this.coords);
             int dx = 0;
             int dy = 0;
 
-            if (MainWindow.toucheHaut) dy -= 1;
-            if (MainWindow.toucheBas) dy += 1;
-            if (MainWindow.toucheGauche) dx -= 1;
-            if (MainWindow.toucheDroite) dx += 1;
-            
+            if (MainWindow.toucheHaut)
+            { 
+                dy -= 1;
+              
+                if (tabCollision[2]!=0)
+                {
+                    dy += 1;
+                }
+            }
+            if (MainWindow.toucheBas)
+            {
+                dy += 1;
+
+                if (tabCollision[3] != 0)
+                {
+                    dy -= 1;
+                }
+            }
+            if (MainWindow.toucheGauche)
+            {
+                dx -= 1;
+
+                if (tabCollision[0] != 0)
+                {
+                    dx+= 1;
+                }
+            }
+            if (MainWindow.toucheDroite)
+            {
+                dx += 1;
+
+                if (tabCollision[1] != 0)
+                {
+                    dx -= 1;
+                }
+            }
             double longueur = Math.Sqrt(dx * dx + dy * dy); // normalisation du vecteur
-            if (longueur != 0) 
+            if (longueur != 0)
             {
                 dx /= (int)longueur;
                 dy /= (int)longueur;
             }
             direction = new Vector2(dx, dy);
-            
+        }
+        public int[] MethodeCollision(double[] coords)
+        {
+            int[] REP=new int[4];
+            int[,] collisions = Map.JsonManager.ChargerCollision("pack://application:,,,/img/Collision.json");
+            int collonePersonnage, lignePersonnage, verifDroite, verifGauche, verifHaut, verifBas;
+
+            //regarde la position du joueur dans un tableau
+            lignePersonnage = (int)Math.Truncate(coords[1] / Constantes.CASE);
+            collonePersonnage = (int)Math.Truncate(coords[0] / Constantes.CASE);
+
+            // Regarde à coté du joueur pour voir si mur
+            REP[0] = collisions[lignePersonnage, collonePersonnage - 1]; //GAUCHE
+            REP[1] = collisions[lignePersonnage, collonePersonnage + 1]; //Droite
+            REP[2] = collisions[lignePersonnage - 1, collonePersonnage]; //Haut
+            REP[3] = collisions[lignePersonnage + 1, collonePersonnage - 1]; //Bas
+
+            return REP;
         }
 
-        
 
 
 
