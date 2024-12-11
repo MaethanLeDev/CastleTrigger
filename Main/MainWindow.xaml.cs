@@ -231,17 +231,17 @@ namespace Main
         {
             int[] REP=new int[4];
             int[,] collisions = Map.JsonManager.ChargerCollision("pack://application:,,,/img/Collision.json");
-            int collonePersonnage, lignePersonnage, verifDroite, verifGauche, verifHaut, verifBas;
+            double collonePersonnage, lignePersonnage;
 
             //regarde la position du joueur dans un tableau
-            lignePersonnage = (int)Math.Truncate(coords[1] / Constantes.CASE);
-            collonePersonnage = (int)Math.Truncate(coords[0] / Constantes.CASE);
+            lignePersonnage = (coords[1] / Constantes.CASE);
+            collonePersonnage = (coords[0] / Constantes.CASE);
 
             // Regarde à coté du joueur pour voir si mur
-            REP[0] = collisions[lignePersonnage, collonePersonnage - 1]; //GAUCHE
-            REP[1] = collisions[lignePersonnage, collonePersonnage + 1]; //Droite
-            REP[2] = collisions[lignePersonnage - 1, collonePersonnage]; //Haut
-            REP[3] = collisions[lignePersonnage + 1, collonePersonnage - 1]; //Bas
+            REP[0] = collisions[(int)Math.Ceiling(lignePersonnage), (int)Math.Ceiling(collonePersonnage) - 1]; //GAUCHE
+            REP[1] = collisions[(int)Math.Truncate(lignePersonnage), (int)Math.Truncate(collonePersonnage) + 1]; //Droite
+            REP[2] = collisions[(int)Math.Ceiling(lignePersonnage) - 1, (int)Math.Ceiling(collonePersonnage)]; //Haut
+            REP[3] = collisions[(int)Math.Truncate(lignePersonnage) + 1, (int)Math.Truncate(collonePersonnage)-1]; //Bas
 
             return REP;
         }
