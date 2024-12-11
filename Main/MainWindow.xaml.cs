@@ -155,7 +155,7 @@ namespace Main
 
         public Entite(double vitesseInitiale)
         {
-            coords = new double[2] { 50, 50 }; // Position de départsss
+            coords = new double[2] { 600, 500 }; // Position de départsss
             speed = vitesseInitiale;
             direction = new Vector2(0, 0);    // Pas de mouvement initial
             this.image = new Rectangle
@@ -170,13 +170,29 @@ namespace Main
         // Met à jour la position du joueur
         public void MettreAJourPosition()
         {
-            coords[0] += direction.X * speed;
-            coords[1] += direction.Y * speed;
+            int[] tabCollision = MethodeCollision(this.coords);
+            if (direction.X==-1 && tabCollision[0]==0)
+            {
+                coords[0] += direction.X * speed;
+            }
+            if (direction.X == +1 && tabCollision[1] == 0)
+            {
+                coords[0] += direction.X * speed;
+            }
+            if (direction.Y == -1 && tabCollision[2]==0)
+            {
+                coords[1] += direction.Y * speed;
+            }
+            if (direction.Y == +1 && tabCollision[3] == 0)
+            {
+                coords[1] += direction.Y * speed;
+            }
+            
         }
 
         public void MettreAJourDirection()
         {
-            int[] tabCollision = MethodeCollision(this.coords);
+            
             int dx = 0;
             int dy = 0;
 
@@ -184,37 +200,24 @@ namespace Main
             { 
                 dy -= 1;
               
-                if (tabCollision[2]!=0)
-                {
-                    dy += 1;
-                }
+             
             }
             if (MainWindow.toucheBas)
             {
                 dy += 1;
 
-                if (tabCollision[3] != 0)
-                {
-                    dy -= 1;
-                }
+                
             }
             if (MainWindow.toucheGauche)
             {
                 dx -= 1;
 
-                if (tabCollision[0] != 0)
-                {
-                    dx+= 1;
-                }
+                
             }
             if (MainWindow.toucheDroite)
             {
                 dx += 1;
-
-                if (tabCollision[1] != 0)
-                {
-                    dx -= 1;
-                }
+               
             }
             double longueur = Math.Sqrt(dx * dx + dy * dy); // normalisation du vecteur
             if (longueur != 0)
