@@ -145,7 +145,7 @@ namespace Main
         }
     }
 
-    public class Personnage
+    public class Entite
     {
         public double[] coords { get; private set; } // Coordonnées du joueur (x, y)
         public double speed { get; private set; }   // Vitesse du joueur
@@ -153,9 +153,9 @@ namespace Main
         public Rectangle image;
 
 
-        public Personnage(double vitesseInitiale)
+        public Entite(double vitesseInitiale)
         {
-            coords = new double[2] { 50, 50 }; // Position de départ
+            coords = new double[2] { 50, 50 }; // Position de départsss
             speed = vitesseInitiale;
             direction = new Vector2(0, 0);    // Pas de mouvement initial
             this.image = new Rectangle
