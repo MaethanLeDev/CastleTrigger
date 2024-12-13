@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices.ActiveDirectory;
 using System.Numerics;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -16,7 +17,7 @@ namespace Main
     public partial class MainWindow : Window
     {
         // ----------- CONSTANTES --------------------------------
-       
+        Rectangle[,] tabRectCol = new Rectangle[60, 60];
 
         // ----------- Déclarations des variables ----------------
         private DispatcherTimer TimerJeu = new DispatcherTimer(); // Chrono pour mettre à jour le jeu
@@ -27,8 +28,7 @@ namespace Main
 
         // ---- ENTITES
         public Entite Joueur;
-        
-        
+
 
         // État des touches
         public static bool toucheHaut = false;
@@ -42,9 +42,8 @@ namespace Main
             this.Content = FenetreJeu;
 
             // Initialisation du joueur
-            Joueur = new Entite(Constantes.VITESSEJOUEUR); 
-            
-            
+            Joueur = new Entite(Constantes.VITESSEJOUEUR);
+
 
             // Initialisation du Timer
             TimerJeu.Interval = TimeSpan.FromMilliseconds(16); // ~60 FPS
@@ -85,20 +84,47 @@ namespace Main
                 Canvas.SetLeft(rect, xPosition);
                 Canvas.SetTop(rect, yPosition);
                 tests.Add(rect);
-                
+
 
                 int[,] collisions = Map.JsonManager.ChargerCollision("pack://application:,,,/img/Collision.json");
 
                 // Exemple d'accès à une cellule
                 Console.WriteLine(collisions[5, 3]);
-
-
+                INITCOL();
 
             }
             tests[0].Fill = Brushes.Blue;
         }
+        public void INITCOL()
+        {
+            int[,] collisions = Map.JsonManager.ChargerCollision("pack://application:,,,/img/Collision.json");
+                   
+            for (int p = 0; p < collisions.GetLength(0); p++)
+            {
+                for (int j = 0; j < collisions.GetLength(1); j++)
+                {
+                    if (collisions[p, j] != 0)
+                    {
+                        Rectangle rectl = new Rectangle
+                        {
+                            Width = Constantes.CASE,
+                            Height = Constantes.CASE,
+                            Fill = Brushes.Purple
 
-        
+
+                        };
+                        FenetreJeu.Children.Add(rectl);
+                        Canvas.SetLeft(rectl, j * 48);
+                        Canvas.SetTop(rectl, p * 48);
+                        tabRectCol[p, j] = rectl;
+                    }
+
+
+                }
+            }
+        }
+
+
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
@@ -119,14 +145,14 @@ namespace Main
 
             Joueur.MettreAJourDirection();
         }
-        
+
 
 
         private void JeuTic(object sender, EventArgs e)
         {
             // Mise à jour des coordonnées du joueur
             Joueur.MettreAJourPosition();
-            
+
 
             // Mise à jour de la position graphique du joueur
             Canvas.SetTop(Joueur.image, Joueur.coords[1]);
@@ -155,7 +181,7 @@ namespace Main
 
         public Entite(double vitesseInitiale)
         {
-            coords = new double[2] { 600, 500 }; // Position de départsss
+            coords = new double[2] {600 ,300  }; // Position de départsss
             speed = vitesseInitiale;
             direction = new Vector2(0, 0);    // Pas de mouvement initial
             this.image = new Rectangle
@@ -171,7 +197,7 @@ namespace Main
         public void MettreAJourPosition()
         {
             int[] tabCollision = MethodeCollision(this.coords);
-            if (direction.X==-1 && tabCollision[0]==0)
+            if (direction.X == -1 && tabCollision[0] == 0)
             {
                 coords[0] += direction.X * speed;
             }
@@ -179,7 +205,7 @@ namespace Main
             {
                 coords[0] += direction.X * speed;
             }
-            if (direction.Y == -1 && tabCollision[2]==0)
+            if (direction.Y == -1 && tabCollision[2] == 0)
             {
                 coords[1] += direction.Y * speed;
             }
@@ -187,37 +213,33 @@ namespace Main
             {
                 coords[1] += direction.Y * speed;
             }
-            
         }
 
         public void MettreAJourDirection()
         {
-            
             int dx = 0;
             int dy = 0;
 
             if (MainWindow.toucheHaut)
-            { 
+            {
                 dy -= 1;
-              
-             
+
             }
             if (MainWindow.toucheBas)
             {
                 dy += 1;
 
-                
+
             }
             if (MainWindow.toucheGauche)
             {
                 dx -= 1;
 
-                
+
             }
             if (MainWindow.toucheDroite)
             {
                 dx += 1;
-               
             }
             double longueur = Math.Sqrt(dx * dx + dy * dy); // normalisation du vecteur
             if (longueur != 0)
@@ -229,25 +251,28 @@ namespace Main
         }
         public int[] MethodeCollision(double[] coords)
         {
-            int[] REP=new int[4];
+            int[] REP = new int[4];
             int[,] collisions = Map.JsonManager.ChargerCollision("pack://application:,,,/img/Collision.json");
-            double collonePersonnage, lignePersonnage;
-
+            int collonePersonnage, lignePersonnage;
+            Canvas.GetBottom(image);
             //regarde la position du joueur dans un tableau
-            lignePersonnage = (coords[1] / Constantes.CASE);
-            collonePersonnage = (coords[0] / Constantes.CASE);
+            lignePersonnage = (int)Math.Truncate(((coords[1]+24) / Constantes.CASE));
+            collonePersonnage = (int)Math.Truncate(((coords[0]+24) / Constantes.CASE));
+            
+            double test = coords[1] - 48,test2 = coords[0]+48;
+            Console.WriteLine((lignePersonnage) + "   " + (collonePersonnage));
 
             // Regarde à coté du joueur pour voir si mur
-            REP[0] = collisions[(int)Math.Ceiling(lignePersonnage), (int)Math.Ceiling(collonePersonnage) - 1]; //GAUCHE
-            REP[1] = collisions[(int)Math.Truncate(lignePersonnage), (int)Math.Truncate(collonePersonnage) + 1]; //Droite
-            REP[2] = collisions[(int)Math.Ceiling(lignePersonnage) - 1, (int)Math.Ceiling(collonePersonnage)]; //Haut
-            REP[3] = collisions[(int)Math.Truncate(lignePersonnage) + 1, (int)Math.Truncate(collonePersonnage)-1]; //Bas
+           REP[0] = collisions[lignePersonnage, (int)Math.Truncate(((coords[0] + 45) / Constantes.CASE)) - 1]; //GAUCHE
+           REP[1] = collisions[lignePersonnage, (int)Math.Truncate(((coords[0] ) / Constantes.CASE)) + 1]; //Droite
+           REP[2] = collisions[(int)Math.Truncate(((coords[1] + 43) / Constantes.CASE)) - 1, collonePersonnage];  //Haut
+           REP[3] = collisions[(int)Math.Truncate(((coords[1] + 3) / Constantes.CASE)) + 1, collonePersonnage];//Bas
 
             return REP;
         }
 
-
-
-
     }
+
+
 }
+    

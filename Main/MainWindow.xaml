@@ -11,4 +11,5 @@
     Background="Black"
     KeyDown="Window_KeyDown"
     KeyUp="Window_KeyUp"
-    mc:Ignorable="d" />
+    mc:Ignorable="d" >Background="#FFDE4141"/>
+</Window>
