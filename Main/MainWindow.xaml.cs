@@ -26,6 +26,7 @@ namespace Main
         public static BitmapImage[] IMAGE_PORTE_HD = new BitmapImage[3];
         public static BitmapImage[] IMAGE_PORTE_BG = new BitmapImage[3];
         public static BitmapImage[] IMAGE_PORTE_BD = new BitmapImage[3];
+        public static BitmapImage[] IMAGE_PASBOUGER_HAUT = new BitmapImage[5];
         public static bool levier1 = false, levier2 = false, levier3 = false, levier4 = false, levier5 = false, levier6 = false, levier7 = false;
         BitmapImage ImageLevierOff = new BitmapImage(new Uri("pack://application:,,,/img/LEVIER_OFF.png"));
         public static Image[,] TAB_IMAGE = new Image[60,60];
@@ -80,35 +81,9 @@ namespace Main
 
             List<Rectangle> tests = new List<Rectangle>();
 
-            for (int i = 0; i < 10; i++)
-            {
-                Rectangle rect = new Rectangle
-                {
-                    Width = Constantes.CASE,  // Largeur du rectangle (en supposant que Constantes.CASE est défini)
-                    Height = Constantes.CASE, // Hauteur du rectangle
-                    Fill = Brushes.Red        // Remplissage du rectangle avec la couleur rouge
-                };
-
-                // Définir la position du rectangle en fonction de l'index
-                double xPosition = 30 + i * (Constantes.CASE + 5); // 5 est l'écart entre les rectangles
-                double yPosition = 30; // Vous pouvez ajuster cette valeur si vous voulez les placer sur une autre ligne
-
-                // Ajouter le rectangle au Canvas
-                FenetreJeu.Children.Add(rect);
-                Canvas.SetLeft(rect, xPosition);
-                Canvas.SetTop(rect, yPosition);
-                tests.Add(rect);
-
-                
-
-
-
-
-                INIT_PORTE_LEVIER();
-               //INITCOL();
-
-            }
-            tests[0].Fill = Brushes.Blue;
+            
+            InitImageAnimation();
+            INIT_PORTE_LEVIER();
         }
         public void INITCOL()
         {
@@ -140,7 +115,10 @@ namespace Main
         }
         public void InitImageAnimation()
         {
-
+            for (int i = 0; i < IMAGE_PORTE_BD.Length; i++)
+            {
+                IMAGE_PORTE_BD[i] = new BitmapImage(new Uri($"pack://application:,,,/img/HAUT/PasBouger/tile_{i + 1}.png"));
+            }
 
 
         }
