@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Main
 {
@@ -10,5 +11,11 @@ namespace Main
     {
         public const double VITESSEJOUEUR = 10;
         public static readonly int CASE = 48;
+        
+
+        
+
+
+
     }
 }
