@@ -16,7 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="img\boutonParametres.png" />
+    <None Remove="img\btnAnnuler.png" />
+    <None Remove="img\btnJouer.png" />
     <None Remove="img\Collision.json" />
+    <None Remove="img\fondAccueil.jpg" />
+    <None Remove="img\fondAccueil.png" />
+    <None Remove="img\fondAccueilBlur.jpg" />
+    <None Remove="img\fondAccueilBlur.png" />
     <None Remove="img\MAP_V1.png" />
   </ItemGroup>
 
@@ -25,10 +32,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="img\boutonParametres.png" />
+    <Resource Include="img\btnAnnuler.png" />
+    <Resource Include="img\btnJouer.png" />
     <Resource Include="img\Collision.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="img\fondAccueil.png" />
+    <Resource Include="img\fondAccueilBlur.png" />
     <Resource Include="img\MAP_V1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="sons\accueilFond.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

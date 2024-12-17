@@ -25,27 +25,52 @@ namespace Main
         private Image fondMap;
         private Canvas FenetreJeu = new Canvas();
 
+        // Boutons Pause
+        private Button butPause = new Button();
+        private Button butReprendre = new Button();
+        private Button butQuitter = new Button();
+        
+
         // ---- ENTITES
         public Entite Joueur;
         
-        
-
         // État des touches
         public static bool toucheHaut = false;
         public static bool toucheBas = false;
         public static bool toucheGauche = false;
         public static bool toucheDroite = false;
 
+        Parametres parametre = new Parametres();
+
         public MainWindow()
         {
+
             InitializeComponent();
+            
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+            this.ResizeMode = ResizeMode.NoResize;
+
+            // Boite de Dialogue Modale
+            Accueil FenetreAccueil = new Accueil();
+            FenetreAccueil.ShowDialog();
+            if (FenetreAccueil.DialogResult == false)
+            {
+                Application.Current.Shutdown();
+            }
+            
+            // Plein ecran
+            this.WindowStyle = WindowStyle.None;
+            this.WindowState = WindowState.Maximized;
+            this.ResizeMode = ResizeMode.NoResize;
+
             this.Content = FenetreJeu;
+
+            InitPause();
 
             // Initialisation du joueur
             Joueur = new Entite(Constantes.VITESSEJOUEUR); 
             
-            
-
             // Initialisation du Timer
             TimerJeu.Interval = TimeSpan.FromMilliseconds(16); // ~60 FPS
             TimerJeu.Tick += JeuTic;
@@ -92,35 +117,47 @@ namespace Main
                 // Exemple d'accès à une cellule
                 Console.WriteLine(collisions[5, 3]);
 
-
-
             }
             tests[0].Fill = Brushes.Blue;
         }
 
-        
-
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Z) toucheHaut = true;
-            if (e.Key == Key.S) toucheBas = true;
-            if (e.Key == Key.Q) toucheGauche = true;
-            if (e.Key == Key.D) toucheDroite = true;
+            if (e.Key == TouchesGlobales.ToucheHaut) toucheHaut = true;
+            if (e.Key == TouchesGlobales.ToucheBas) toucheBas = true;
+            if (e.Key == TouchesGlobales.ToucheGauche) toucheGauche = true;
+            if (e.Key == TouchesGlobales.ToucheDroite) toucheDroite = true;
+
 
             Joueur.MettreAJourDirection();
         }
 
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Z) toucheHaut = false;
-            if (e.Key == Key.S) toucheBas = false;
-            if (e.Key == Key.Q) toucheGauche = false;
-            if (e.Key == Key.D) toucheDroite = false;
+            if (e.Key == TouchesGlobales.ToucheHaut) toucheHaut = false;
+            if (e.Key == TouchesGlobales.ToucheBas) toucheBas = false;
+            if (e.Key == TouchesGlobales.ToucheGauche) toucheGauche = false;
+            if (e.Key == TouchesGlobales.ToucheDroite) toucheDroite = false;
+
 
             Joueur.MettreAJourDirection();
         }
         
+        private void InitPause()
+        {
+            butPause.Height = 80;butPause.Width = 80;butPause.Background = Brushes.Green;
+            butReprendre.Height = 80;butReprendre.Width = 80;butReprendre.Background = Brushes.Blue;
+            butQuitter.Height = 80;butQuitter.Width = 80;butQuitter.Background = Brushes.Red;
 
+            FenetreJeu.Children.Add(butPause);
+            FenetreJeu.Children.Add(butReprendre);
+            FenetreJeu.Children.Add(butQuitter);
+
+            double canvasWidth = this.ActualWidth;
+            double canvasHeight = this.ActualHeight;
+            Canvas.SetLeft(butPause, canvasWidth - butPause.Width - 20);
+            Canvas.SetTop(butPause, canvasHeight * 0.2);
+        }
 
         private void JeuTic(object sender, EventArgs e)
         {
@@ -242,7 +279,7 @@ namespace Main
 
             return REP;
         }
-
+        
 
 
 
