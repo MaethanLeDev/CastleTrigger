@@ -30,10 +30,12 @@ namespace Main
         BitmapImage ImageLevierOff = new BitmapImage(new Uri("pack://application:,,,/img/LEVIER_OFF.png"));
         public static Image[,] TAB_IMAGE = new Image[60,60];
         public static int[,] collisions = Map.JsonManager.INITTABCOLLISION();
+
         // ----------- Déclarations des variables ----------------
         private DispatcherTimer TimerJeu = new DispatcherTimer(); // Chrono pour mettre à jour le jeu
         public static DispatcherTimer TIM_ANI_PORTE;
         public List<Object> aDebug;
+
         // ---- FENETRE GRAPHIQUE
         private Image fondMap;
         public static Canvas FenetreJeu = new Canvas();
@@ -53,7 +55,7 @@ namespace Main
         public static bool toucheBas = false;
         public static bool toucheGauche = false;
         public static bool toucheDroite = false;
-        public static bool toucheE = false;
+        public static bool toucheActiver = false;
 
         Parametres parametre = new Parametres();
 
@@ -323,6 +325,7 @@ namespace Main
             if (e.Key == TouchesGlobales.ToucheBas) toucheBas = true;
             if (e.Key == TouchesGlobales.ToucheGauche) toucheGauche = true;
             if (e.Key == TouchesGlobales.ToucheDroite) toucheDroite = true;
+            if (e.Key == TouchesGlobales.ToucheActiver) toucheActiver = true;
 
 
             Joueur.MettreAJourDirection();
@@ -334,6 +337,7 @@ namespace Main
             if (e.Key == TouchesGlobales.ToucheBas) toucheBas = false;
             if (e.Key == TouchesGlobales.ToucheGauche) toucheGauche = false;
             if (e.Key == TouchesGlobales.ToucheDroite) toucheDroite = false;
+            if (e.Key == TouchesGlobales.ToucheActiver) toucheActiver = false;
 
 
             Joueur.MettreAJourDirection();
@@ -483,18 +487,18 @@ namespace Main
             
 
             // Regarde à coté du joueur pour voir si mur
-           REP[0] = MainWindow.collisions[lignePersonnage, (int)Math.Truncate(((coords[0] + 45) / Constantes.CASE)) - 1]; //GAUCHE
-           REP[1] = MainWindow.collisions[lignePersonnage, (int)Math.Truncate(((coords[0] ) / Constantes.CASE)) + 1]; //Droite
-           REP[2] = MainWindow.collisions[(int)Math.Truncate(((coords[1] + 43) / Constantes.CASE)) - 1, collonePersonnage];  //Haut
-           REP[3] = MainWindow.collisions[(int)Math.Truncate(((coords[1] + 3) / Constantes.CASE)) + 1, collonePersonnage];//Bas
-            if(MainWindow.toucheE==true)
+            REP[0] = MainWindow.collisions[lignePersonnage, (int)Math.Truncate(((coords[0] + 45) / Constantes.CASE)) - 1]; //GAUCHE
+            REP[1] = MainWindow.collisions[lignePersonnage, (int)Math.Truncate(((coords[0] ) / Constantes.CASE)) + 1]; //Droite
+            REP[2] = MainWindow.collisions[(int)Math.Truncate(((coords[1] + 43) / Constantes.CASE)) - 1, collonePersonnage];  //Haut
+            REP[3] = MainWindow.collisions[(int)Math.Truncate(((coords[1] + 3) / Constantes.CASE)) + 1, collonePersonnage];//Bas
+            if(MainWindow.toucheActiver==true)
             ActivationLevier(lignePersonnage,collonePersonnage);
             return REP;
         }
         public void ActivationLevier(int lignePersonnage, int collonePersonnage)
         {
            
-            if (MainWindow.toucheE == true && TestLEVIER() == true)
+            if (MainWindow.toucheActiver == true && TestLEVIER() == true)
             {
                 int colLevier = 0, liLevier = 0;
                 int[,] tabPorteLevier = Map.JsonManager.INITTABLEVIER_PORTE();

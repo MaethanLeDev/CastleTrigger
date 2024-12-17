@@ -51,6 +51,9 @@
     <None Remove="img\BAS\PasBouger\tile_3.png" />
     <None Remove="img\BAS\PasBouger\tile_4.png" />
     <None Remove="img\BAS\PasBouger\tile_5.png" />
+    <None Remove="img\boutonParametres.png" />
+    <None Remove="img\btnAnnuler.png" />
+    <None Remove="img\btnJouer.png" />
     <None Remove="img\Collision.json" />
     <None Remove="img\DROITE\attaque01\tile_1.png" />
     <None Remove="img\DROITE\attaque01\tile_2.png" />
@@ -87,6 +90,8 @@
     <None Remove="img\DROITE\PasBouger\tile_3.png" />
     <None Remove="img\DROITE\PasBouger\tile_4.png" />
     <None Remove="img\DROITE\PasBouger\tile_5.png" />
+    <None Remove="img\fondAccueil.png" />
+    <None Remove="img\fondAccueilBlur.png" />
     <None Remove="img\GAUCHE\attaque01\tile_1.png" />
     <None Remove="img\GAUCHE\attaque01\tile_2.png" />
     <None Remove="img\GAUCHE\attaque01\tile_3.png" />
@@ -215,6 +220,15 @@
     <Resource Include="img\BAS\PasBouger\tile_3.png" />
     <Resource Include="img\BAS\PasBouger\tile_4.png" />
     <Resource Include="img\BAS\PasBouger\tile_5.png" />
+    <Resource Include="img\boutonParametres.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\btnAnnuler.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\btnJouer.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="img\Collision.json" />
     <Resource Include="img\DROITE\attaque01\tile_1.png" />
     <Resource Include="img\DROITE\attaque01\tile_2.png" />
@@ -251,6 +265,12 @@
     <Resource Include="img\DROITE\PasBouger\tile_3.png" />
     <Resource Include="img\DROITE\PasBouger\tile_4.png" />
     <Resource Include="img\DROITE\PasBouger\tile_5.png" />
+    <Resource Include="img\fondAccueil.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\fondAccueilBlur.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="img\GAUCHE\attaque01\tile_1.png" />
     <Resource Include="img\GAUCHE\attaque01\tile_2.png" />
     <Resource Include="img\GAUCHE\attaque01\tile_3.png" />
@@ -322,9 +342,15 @@
     <Resource Include="img\HAUT\PasBouger\tile_3.png" />
     <Resource Include="img\HAUT\PasBouger\tile_4.png" />
     <Resource Include="img\HAUT\PasBouger\tile_5.png" />
-    <Resource Include="img\LEVIER_OFF.png" />
-    <Resource Include="img\LEVIER_ON.png" />
-    <Resource Include="img\MAP_V1.png" />
+    <Resource Include="img\LEVIER_OFF.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\LEVIER_ON.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="img\MAP_V1.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="img\PORTE\PORTE_BD\PORTE_BD_01.png" />
     <Resource Include="img\PORTE\PORTE_BD\PORTE_BD_02.png" />
     <Resource Include="img\PORTE\PORTE_BD\PORTE_BD_03.png" />
